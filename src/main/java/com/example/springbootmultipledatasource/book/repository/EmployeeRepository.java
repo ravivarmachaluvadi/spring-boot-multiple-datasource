@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 
 @Repository
@@ -18,4 +19,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>  {
             value = "select * from employees where last_name='Chaluvadi' FETCH NEXT 1 ROWS ONLY",
             nativeQuery = true)
     List<Employee> findEmployees();
+
+    Collection<NamesOnly> findByLastname(String lastName);
+
 }

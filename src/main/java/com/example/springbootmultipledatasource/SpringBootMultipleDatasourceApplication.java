@@ -3,6 +3,7 @@ package com.example.springbootmultipledatasource;
 import com.example.springbootmultipledatasource.author.repository.AuthorRepository;
 import com.example.springbootmultipledatasource.book.repository.BookRepository;
 import com.example.springbootmultipledatasource.book.repository.EmployeeRepository;
+import com.example.springbootmultipledatasource.book.repository.NamesOnly;
 import com.example.springbootmultipledatasource.model.author.Author;
 import com.example.springbootmultipledatasource.model.book.Book;
 import com.example.springbootmultipledatasource.model.book.Employee;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.Collection;
 import java.util.List;
 
 @SpringBootApplication
@@ -90,6 +92,13 @@ public class SpringBootMultipleDatasourceApplication implements CommandLineRunne
 		employee.setDEPARTMENT_ID(60);
 
 		employeeRepository.save(employee);*/
+
+		Collection<NamesOnly> chaluvadi = employeeRepository.findByLastname("Chaluvadi");
+
+		for (NamesOnly namesOnly : chaluvadi){
+			System.out.println(namesOnly.getFirstname() +" : "+namesOnly.getLastname()+" : " +namesOnly.getSalary());
+		}
+
 		getEmployee();
 	}
 

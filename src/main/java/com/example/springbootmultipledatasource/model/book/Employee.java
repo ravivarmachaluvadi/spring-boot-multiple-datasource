@@ -19,13 +19,16 @@ public class Employee {
     @Id
     @Column(name = "EMPLOYEE_ID")
     private Integer employeeId;
-    private String FIRST_NAME;
-    private String LAST_NAME;
+    @Column(name = "FIRST_NAME")
+    private String firstname;
+    @Column(name = "LAST_NAME")
+    private String lastname;
     private String  EMAIL;
     private String PHONE_NUMBER;
     private Date HIRE_DATE;
     private String JOB_ID;
-    private Float SALARY;
+    @Column(name = "SALARY")
+    private Float salary;
     private Float COMMISSION_PCT;
     private Integer MANAGER_ID;
     private  Integer DEPARTMENT_ID;
