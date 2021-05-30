@@ -9,7 +9,10 @@ import com.example.springbootmultipledatasource.model.book.Employee;
 import com.example.springbootmultipledatasource.model.user.User;
 import com.example.springbootmultipledatasource.user.repository.UserRepository;
 import lombok.val;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,7 +23,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Date;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @SpringBootApplication
@@ -40,6 +45,10 @@ public class SpringBootMultipleDatasourceApplication implements CommandLineRunne
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
+
+	@Autowired
+	@Qualifier(value = "bookEntityManagerFactory")
+	SessionFactory sessionFactory;
 
 	@Autowired
 	Environment environment;
@@ -64,28 +73,54 @@ public class SpringBootMultipleDatasourceApplication implements CommandLineRunne
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.SERIALIZABLE,rollbackFor = {RuntimeException.class})
+	@Transactional(rollbackFor =RuntimeException.class)
 	public void run(String... args) throws Exception {
 
-		Employee employee = new Employee();
+		/*Employee employee = new Employee();
 
-		employee.setEmployeeId(500);
-		employee.setFIRST_NAME("Rupa");
-		employee.setLAST_NAME("Chaluvadi");
-		employee.setEMAIL("Chaluvadi");
+		employee.setEmployeeId(700);
+		employee.setFIRST_NAME("Nive");
+		employee.setLAST_NAME("T");
+		employee.setEMAIL("Nive");
 		employee.setPHONE_NUMBER("778.020.8242");
 		employee.setHIRE_DATE(new Date());
 		employee.setJOB_ID("IT_PROG");
 		employee.setSALARY(200000f);
-		employee.setMANAGER_ID(105);
+		employee.setMANAGER_ID(205);
 		employee.setDEPARTMENT_ID(60);
 
-		employeeRepository.save(employee);
+		employeeRepository.save(employee);*/
+		getEmployee();
+	}
+
+	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.SERIALIZABLE)
+	private void getEmployee() {
 		val v=environment.getProperty("hibernate.hbm2ddl.auto");
 		Employee employee1  =employeeRepository.findByEmployeeId(100);
 		System.out.println(employee1);
 
-		throw new RuntimeException("Explicit Exception");
+		Session session = sessionFactory.openSession();
 
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+
+		CriteriaQuery<Employee> criteria = builder.createQuery(Employee.class);
+
+		Root<Employee> root = criteria.from(Employee.class);
+
+		criteria.where(
+				builder.equal(root.get("employeeId"), 500)
+		);
+
+		List<Employee> employees = session
+				.createQuery(criteria)
+				.getResultList();
+
+		for(Employee emp : employees){
+			System.out.println(emp);
+		}
+
+		List<Employee> employeesListSQL = employeeRepository.findEmployees();
+
+		//throw new RuntimeException("Explicit Exception");
 	}
 }
