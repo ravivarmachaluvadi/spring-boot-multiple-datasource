@@ -33,7 +33,7 @@ public class BookDBConfig {
     public LocalContainerEntityManagerFactoryBean bookEntityManagerFactory(EntityManagerFactoryBuilder builder,
                                                                            @Qualifier("bookDataSource") DataSource dataSource) {
         HashMap<String, Object> properties = new HashMap<>();
-        //properties.put("hibernate.hbm2ddl.auto", "create-drop");
+        properties.put("hibernate.hbm2ddl.auto", "none");
         properties.put("hibernate.dialect", "org.hibernate.dialect.Oracle12cDialect");
         return builder.dataSource(dataSource).properties(properties)
                 .packages("com.example.springbootmultipledatasource.model.book").persistenceUnit("Book").build();

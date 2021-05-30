@@ -29,4 +29,6 @@ public class Employee {
     private Float COMMISSION_PCT;
     private Integer MANAGER_ID;
     private  Integer DEPARTMENT_ID;
+    //private  Integer DEPT_ID; new field with "hibernate.hbm2ddl.auto", "none" will give invalid identifier exception
+    ////private  Integer DEPT_ID; new field with "hibernate.hbm2ddl.auto", "anyother"  will alter db table add new column to table
 }

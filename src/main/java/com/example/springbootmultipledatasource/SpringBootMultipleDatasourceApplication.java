@@ -8,12 +8,19 @@ import com.example.springbootmultipledatasource.model.book.Book;
 import com.example.springbootmultipledatasource.model.book.Employee;
 import com.example.springbootmultipledatasource.model.user.User;
 import com.example.springbootmultipledatasource.user.repository.UserRepository;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.env.Environment;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Date;
 import java.util.List;
 
 @SpringBootApplication
@@ -28,9 +35,14 @@ public class SpringBootMultipleDatasourceApplication implements CommandLineRunne
 	@Autowired
 	private AuthorRepository authorRepository;
 
+	@Autowired
+	ApplicationContext applicationContext;
 
 	@Autowired
 	private EmployeeRepository employeeRepository;
+
+	@Autowired
+	Environment environment;
 
 	@GetMapping("/getUsers")
 	public List<User> getUsers() {
@@ -52,27 +64,28 @@ public class SpringBootMultipleDatasourceApplication implements CommandLineRunne
 	}
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.SERIALIZABLE,rollbackFor = {RuntimeException.class})
 	public void run(String... args) throws Exception {
 
-		/*Employee employee = new Employee();
+		Employee employee = new Employee();
 
-		employee.setEmployeeId(208);
-		employee.setFIRST_NAME("Ravi");
+		employee.setEmployeeId(500);
+		employee.setFIRST_NAME("Rupa");
 		employee.setLAST_NAME("Chaluvadi");
-		employee.setEMAIL("Varma");
+		employee.setEMAIL("Chaluvadi");
 		employee.setPHONE_NUMBER("778.020.8242");
 		employee.setHIRE_DATE(new Date());
 		employee.setJOB_ID("IT_PROG");
-		employee.setSALARY(150000f);
-		employee.setMANAGER_ID(208);
+		employee.setSALARY(200000f);
+		employee.setMANAGER_ID(105);
 		employee.setDEPARTMENT_ID(60);
 
 		employeeRepository.save(employee);
-*/
+		val v=environment.getProperty("hibernate.hbm2ddl.auto");
 		Employee employee1  =employeeRepository.findByEmployeeId(100);
-
 		System.out.println(employee1);
 
+		throw new RuntimeException("Explicit Exception");
 
 	}
 }
