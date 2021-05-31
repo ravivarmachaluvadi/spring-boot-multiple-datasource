@@ -35,7 +35,6 @@ public class BookDBConfig {
         HashMap<String, Object> properties = new HashMap<>();
         properties.put("hibernate.hbm2ddl.auto", "none");
         properties.put("hibernate.dialect", "org.hibernate.dialect.Oracle12cDialect");
-        properties.put("spring.datasource.hikari.poolName","OraclePool");
         return builder.dataSource(dataSource).properties(properties)
                 .packages("com.example.springbootmultipledatasource.model.book").persistenceUnit("Book").build();
     }

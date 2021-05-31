@@ -93,6 +93,11 @@ public class SpringBootMultipleDatasourceApplication implements CommandLineRunne
 
 		employeeRepository.save(employee);*/
 
+		NamesOnly topEmp = employeeRepository.findTopByLastname("Chaluvadi");
+
+		System.out.println(topEmp);
+
+
 		Collection<NamesOnly> chaluvadi = employeeRepository.findByLastname("Chaluvadi");
 
 		for (NamesOnly namesOnly : chaluvadi){

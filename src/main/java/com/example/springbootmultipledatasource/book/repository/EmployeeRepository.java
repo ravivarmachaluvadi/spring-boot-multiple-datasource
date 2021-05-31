@@ -22,4 +22,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer>  {
 
     Collection<NamesOnly> findByLastname(String lastName);
 
+    NamesOnly findTopByLastname(String lastName);
+
 }
