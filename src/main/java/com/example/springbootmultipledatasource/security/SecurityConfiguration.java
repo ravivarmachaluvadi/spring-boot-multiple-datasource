@@ -1,6 +1,7 @@
 package com.example.springbootmultipledatasource.security;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,23 +16,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.inMemoryAuthentication()
-                .withUser("ravi")
-                .password("rupa")
-                .roles("USER")
+                .withUser("ravi").password("rupa").roles("USER")
                 .and()
-                .withUser("deva")
-                .password("king")
-                .roles("ADMIN");
+                .withUser("deva").password("king").roles("ADMIN","USER");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests()
+        http.httpBasic()
+                .and()
+                .authorizeRequests()
                 .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/user").hasAnyRole("USER","ADMIN")
-                .antMatchers("/","static/css","static/js").permitAll()
-                .and().httpBasic();//formLogin();
+                .antMatchers(HttpMethod.GET, "/employee/**").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/employee/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, "/employee/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/employee/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/employee/**").hasRole("ADMIN")
+                .antMatchers("/user").hasAnyRole("USER")
+                .antMatchers("/**").permitAll()
+                .and().csrf().disable()
+                .formLogin().disable();//formLogin();
     }
 
     @Bean

@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @Data
@@ -19,12 +20,15 @@ public class Employee {
     @Id
     @Column(name = "EMPLOYEE_ID")
     private Integer employeeId;
+    @NotEmpty(message = "first name must not be empty")
     @Column(name = "FIRST_NAME")
     private String firstname;
+    @NotEmpty(message = "last name must not be empty")
     @Column(name = "LAST_NAME")
     private String lastname;
+    @NotEmpty(message = "email must not be empty")
     private String  EMAIL;
-    //private String PHONE_NUMBER;
+    private String PHONE_NUMBER;
     private Date HIRE_DATE;
     private String JOB_ID;
     @Column(name = "SALARY")
