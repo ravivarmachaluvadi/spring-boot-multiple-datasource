@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -22,15 +23,15 @@ public class Employee {
     private String firstname;
     @Column(name = "LAST_NAME")
     private String lastname;
-    //private String  EMAIL;
+    private String  EMAIL;
     //private String PHONE_NUMBER;
-   // private Date HIRE_DATE;
-    //private String JOB_ID;
+    private Date HIRE_DATE;
+    private String JOB_ID;
     @Column(name = "SALARY")
     private Float salary;
-    //private Float COMMISSION_PCT;
-    //private Integer MANAGER_ID;
-    //private  Integer DEPARTMENT_ID;
+    private Float COMMISSION_PCT;
+    private Integer MANAGER_ID;
+    private  Integer DEPARTMENT_ID;
     //private  Integer DEPT_ID; new field with "hibernate.hbm2ddl.auto", "none" will give invalid identifier exception
     ////private  Integer DEPT_ID; new field with "hibernate.hbm2ddl.auto", "anyother"  will alter db table add new column to table
 }
