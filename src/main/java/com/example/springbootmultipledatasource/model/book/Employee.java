@@ -1,5 +1,6 @@
 package com.example.springbootmultipledatasource.model.book;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class Employee {
     @Id
     @Column(name = "EMPLOYEE_ID")
     private Integer employeeId;
+    @ApiModelProperty(notes = "First Name of the Employee",name="firstname",required=true,value="test name")
     @NotEmpty(message = "first name must not be empty")
     @Column(name = "FIRST_NAME")
     private String firstname;
