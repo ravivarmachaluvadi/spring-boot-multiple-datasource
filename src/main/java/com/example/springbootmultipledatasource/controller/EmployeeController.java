@@ -3,6 +3,7 @@ package com.example.springbootmultipledatasource.controller;
 
 import com.example.springbootmultipledatasource.cloud.DbProperties;
 import com.example.springbootmultipledatasource.cloud.PropsDTO;
+import com.example.springbootmultipledatasource.component.BulkRequest;
 import com.example.springbootmultipledatasource.model.book.Employee;
 import com.example.springbootmultipledatasource.service.EmployeeService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,6 +24,9 @@ import java.util.List;
 public class EmployeeController {
 
     @Autowired
+    BulkRequest bulkRequest;
+
+    @Autowired
     PropsDTO propsDTO;
 
     @Autowired
@@ -41,7 +45,7 @@ public class EmployeeController {
     List<Employee> getEmployees(){
 
         List<Employee> employeeList=employeeService.getAllEmployess();
-
+        bulkRequest.isBulkRequest=true;
         return employeeList;
     }
 
