@@ -15,9 +15,8 @@ public class EventSubscriber {
 
     @AfterReturning("execution(* com.example.springbootmultipledatasource.controller.EmployeeController.getEmployees())")
     public void run(JoinPoint joinPoint){
-        while(bulkRequest.isBulkRequest){
+        if(bulkRequest.isBulkRequest){
             System.out.println("Received Bulk Request");
-            bulkRequest.isBulkRequest=false;
         }
     }
 
