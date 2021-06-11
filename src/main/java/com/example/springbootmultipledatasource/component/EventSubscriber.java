@@ -13,8 +13,9 @@ public class EventSubscriber {
     @Autowired
     BulkRequest bulkRequest;
 
-    @AfterReturning("execution(* com.example.springbootmultipledatasource.controller.EmployeeController.getEmployees())")
+    @AfterReturning("execution(* com.example.springbootmultipledatasource.controller.EmployeeController.getEmployee(..))")
     public void run(JoinPoint joinPoint){
+
         if(bulkRequest.isBulkRequest){
             System.out.println("Received Bulk Request");
         }

@@ -45,7 +45,6 @@ public class EmployeeController {
     List<Employee> getEmployees(){
 
         List<Employee> employeeList=employeeService.getAllEmployess();
-        bulkRequest.isBulkRequest=true;
         return employeeList;
     }
 
@@ -53,7 +52,7 @@ public class EmployeeController {
     Employee getEmployee(@PathVariable int id){
 
         Employee employee=employeeService.getEmployee(id);
-
+        bulkRequest.isBulkRequest=true;
         return employee;
     }
 
