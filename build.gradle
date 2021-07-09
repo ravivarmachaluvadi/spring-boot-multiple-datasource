@@ -38,6 +38,8 @@ dependencies {
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.6.1'
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.6.1'
+	//implementation group: 'de.codecentric', name: 'spring-boot-admin-server', version: '2.4.1'
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	//implementation group: 'org.springframework.data', name: 'spring-data-rest-hal-browser', version: '3.0.7.RELEASE'
 	//implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-config', version: '3.0.4'
 }
